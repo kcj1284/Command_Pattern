@@ -27,7 +27,7 @@ public class Robot {
 			this.x += go;
 			break;
 		case DOWN:
-			this.y -= go;
+			this.y += go;
 			break;
 		}
 	}

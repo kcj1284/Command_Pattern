@@ -10,61 +10,10 @@ abstract class Command {
 	public abstract void execute();
 }
 
-class MoveForwardCommand extends Command {
-	int space;
 
-	public MoveForwardCommand(int _space) {
-		space = _space;
-	}
-
-	public void execute() {
-		robot.moveForward(space);
-	}
-
-	@Override
-	public String toString() {
-		return space + "칸 이동</br>";
-	}
-}
-
-class TurnCommand extends Command {
-	Robot.Direction direction;
-
-	public TurnCommand(Robot.Direction _direction) {
-		direction = _direction;
-	}
-
-	public void execute() {
-		robot.turn(direction);
-	}
-
-	@Override
-	public String toString() {
-		switch (direction) {
-		case LEFT:
-			return "왼쪽으로 ";
-		case UP:
-			return "위쪽으로 ";
-		case RIGHT:
-			return "오른쪽으로 ";
-		case DOWN:
-			return "아래로 ";
-		}
-		return "";
-	}
-}
 
 class PickupCommand extends Command {
 	public void execute() {
 		robot.pickup();
 	}
-}
-
-class ChargeCommand extends Command {
-	public void execute() {
-		robot.charge();
-	}
-	public void charge() {
-	}
-	
 }
