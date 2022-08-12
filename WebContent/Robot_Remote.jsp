@@ -13,21 +13,34 @@ String position = String.valueOf(request.getAttribute("position"));
 <meta charset="EUC-KR">
 <title>Robot Remote</title>
 <style type="text/css">
-div#out {
-	display: flex;
-	flex-direction: column;
+body {
+	
 }
 
-#up {
-	height: 30%;
-	position: static;
-	box-sizing: border-box;
+div#out {
+	display: flex;
+	flex-direction: row;
+}
+
+#container {
+	padding: 0px 0px 0px 60px;
 }
 
 #left {
 	width: 30%;
 	float: left;
 	box-sizing: border-box;
+	margin: 20px;
+}
+
+#commandlist {
+	border: 3px solid;
+	margin: 1px;
+}
+
+#com {
+	border: 3px solid;
+	margin: 1px;
 }
 
 #right {
@@ -38,121 +51,98 @@ div#out {
 </style>
 </head>
 <body>
+
 	<form action="/Command_Pattern" method="get">
 		<div id="out">
-			<div id="up">
-				<div id="left">
+			<div id="left">
+				<div id="com">
 					<input type="hidden" name="cmd" value="commit"> 회전 방향 <br />
-					위 오른쪽 아래 왼쪽<br /> <input type="radio" name="turn" value="UP">
-					<input type="radio" name="turn" value="RIGHT"> <input
-						type="radio" name="turn" value="DOWN"> <input type="radio"
-						name="turn" value="LEFT"><br /> 전진할 칸 : <input
+					위 오른쪽 아래 왼쪽<br /> <input type="radio" name="turn" value="UP">&nbsp;
+					<input type="radio" name="turn" value="RIGHT">&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="turn" value="DOWN">&nbsp;&nbsp; <input
+						type="radio" name="turn" value="LEFT"><br /> 전진할 칸 : <input
 						type="number" name="go"><br /> <input value="저장"
-						type="submit" name="save"> <input value="실행" type="button"
+						type="submit" name="save"> <input
+						value="취소" type="button" onClick="window.location.reload()"> <input value="실행" type="button"
 						onclick="start()">
 				</div>
-				<div id="right">
-					현재 위치 :
-					<%
+				현재 위치 :
+				<%
 					if (position == "null") {
 					out.print("8,4");
 				%>
-					<!--  <span id = "ro_y">8</span> X : <span id = "ro_x">4</span> -->
+				<!--  <span id = "ro_y">8</span> X : <span id = "ro_x">4</span> -->
+				<%
+					} else {
+				out.print(position);
+				}
+				%>
+				<div id="commandlist">
 					<%
-						} else {
-					out.print(position);
-					}
+						if (history == "null")
+						out.print("");
+					else
+						out.print(history);
 					%>
-					<div id="commandlist">
-						<%
-							if (history == "null")
-							out.print("");
-						else
-							out.print(history);
-						%>
-					</div>
 				</div>
 			</div>
-			<div id="table" style="width: 327px; height: 500px">
-				<%
-					if (history == "null") {
-				%>
-				<div id="container">
-					<script>
-						const rowCnt = 9;
-						const columnCnt = 9;
-						document.write('<table border="1">');
-						for (let i = 0; i < rowCnt; i++) {
-							document.write('<tr>');
-							for (let j = 0; j < columnCnt; j++) {
-								if (i == 8 && j == 4) {
-									document.write('<td>');
-									document.write("&nbsp●");
-									document.write('</td>');
-								} else {
-									document.write('<td>');
-									document.write("&nbsp&nbsp&nbsp&nbsp");
-									document.write('</td>');
-								}
-							}
-							document.write('</tr>')
-						}
-						document.write('</table>');
-					</script>
-				</div>
-				<%
-					} else {
-				%>
-				<div id="container">
-					<%
-						if (position == "null") {
-							%><h6 style="color:white;"><%
-						out.print("8,4");
-							%></h6><%
-					} else {
+			<div id="right">
+				<div id="table">
+					<div id="container">
+						<%
+							if (position == "null") {
+						%><h6 id="int_x" style="color: white;">
+							<%
+								out.print("8");
+							%>
+						</h6>
+						<h6 id="int_y" style="color: white;">
+							<%
+								out.print("4");
+							%>
+						</h6>
+						<%
+							} else {
 						String[] str = position.split(",");
-					%><h6 id="int_x" style="color:white;">
+						%><h6 id="int_x" style="color: white;">
+							<%
+								out.print(str[0].charAt(0));
+							%>
+						</h6>
+						<h6 id="int_y" style="color: white;">
+							<%
+								out.print(str[1].charAt(0));
+							%>
+						</h6>
 						<%
-							out.print(str[0].charAt(0));
-						%>
-					</h6>
-					<h6 id="int_y" style="color:white;">
-						<%
-							out.print(str[1].charAt(0));
-						%>
-					</h6>
-					<%
-						}
-					%>
-					<script>
-						const x = document.getElementById("int_x").innerText;
-						const y = document.getElementById("int_y").innerText;
-						console.log(x);
-						console.log(y);
-						const rowCnt = 9;
-						const columnCnt = 9;
-						document.write('<table border="1">');
-						for (let i = 0; i < rowCnt; i++) {
-							document.write('<tr>');
-							for (let j = 0; j < columnCnt; j++) {
-								if (x == j && y == i) {
-									document.write('<td>');
-									document.write("&nbsp●");
-									document.write('</td>');
-								} else {
-									document.write('<td>');
-									document.write("&nbsp&nbsp&nbsp&nbsp");
-									document.write('</td>');
-								}
 							}
-							document.write('</tr>')
-						}
-						document.write('</table>');
-					</script>
+						%>
+						<script>
+							const x = document.getElementById("int_x").innerText;
+							const y = document.getElementById("int_y").innerText;
+							const rowCnt = 9;
+							const columnCnt = 9;
+							document
+									.write('<table border="3" width = 350px, height = 350px>');
+							for (let i = 0; i < rowCnt; i++) {
+								document.write('<tr>');
+								for (let j = 0; j < columnCnt; j++) {
+									if (x != null && x == i && y == j) {
+										document.write('<td>');
+										document.write("&nbsp●");
+										document.write('</td>');
+									} else {
+										document.write('<td>');
+										document.write("&nbsp&nbsp&nbsp&nbsp");
+										document.write('</td>');
+									}
+								}
+								document.write('</tr>')
+							}
+							document.write('</table>');
+						</script>
+					</div>
 				</div>
-				<%
-					} ;
-				%>
 			</div>
 		</div>
 	</form>

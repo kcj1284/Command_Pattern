@@ -53,8 +53,8 @@ public class MyServlet extends HttpServlet {
 		else {
 			Robot.Direction direction = Robot.Direction.UP;
 			switch (request.getParameter("turn")) {
-			case "LEFT":
-				direction = Robot.Direction.LEFT;
+			case "UP":
+				direction = Robot.Direction.UP;
 				break;
 			case "RIGHT":
 				direction = Robot.Direction.RIGHT;
@@ -62,9 +62,10 @@ public class MyServlet extends HttpServlet {
 			case "DOWN":
 				direction = Robot.Direction.DOWN;
 				break;
-			case "UP":
-				direction = Robot.Direction.UP;
+			case "LEFT":
+				direction = Robot.Direction.LEFT;
 				break;
+			
 			}
 			int go = Integer.valueOf(request.getParameter("go"));
 			robot.addCommand(new TurnCommand(direction));

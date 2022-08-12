@@ -10,8 +10,6 @@ abstract class Command {
 	public abstract void execute();
 }
 
-
-
 class PickupCommand extends Command {
 	public void execute() {
 		robot.pickup();
